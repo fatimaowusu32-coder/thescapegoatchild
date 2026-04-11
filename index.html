@@ -7,7 +7,8 @@
   <link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400;0,6..96,700;0,6..96,900;1,6..96,400;1,6..96,700&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet"/>
   <!--
   KIT SETUP:
-  1. Paste your Kit <script> tag just before </head>
+  1. Paste your Kit <script> tag just before <script src="https://f.convertkit.com/ckjs/ck.5.js"></script>
+</head>
   2. Replace all <form> placeholders (search KIT FORM) with your Kit form HTML
   -->
   <style>
@@ -213,7 +214,7 @@
         <div class="kit-wrap" style="margin-top:2.5rem;" id="notify">
           <span class="kit-label">Get notified + receive a free sample chapter</span>
           <!-- KIT FORM 1 -->
-          <form onsubmit="submitKit(event,this,'Notify Me')"><input type="email" placeholder="Your email address" required/><button type="submit">Notify Me</button></form>
+          <form action="https://app.kit.com/forms/9314576/subscriptions" class="seva-form" method="post" data-sv-form="9314576" data-uid="739be0019d" data-format="inline" data-version="5"><div data-element="fields"><input name="email_address" aria-label="Email Address" placeholder="Your email address" required="" type="email"/><button data-element="submit" type="submit"><span>Notify Me</span></button></div></form>
           <p class="form-note">No spam. Unsubscribe anytime.</p>
         </div>
       </div>
@@ -407,7 +408,7 @@
         <div class="kit-wrap kit-dark" style="margin-top:2rem;">
           <span class="kit-label kit-label-light">Enter your email to get the free chapter</span>
           <!-- KIT FORM 2 -->
-          <form onsubmit="submitKit(event,this,'Send Me the Chapter')"><input type="email" placeholder="Your email address" required/><button type="submit">Send Me the Chapter</button></form>
+          <form action="https://app.kit.com/forms/9314576/subscriptions" class="seva-form" method="post" data-sv-form="9314576" data-uid="739be0019d" data-format="inline" data-version="5"><div data-element="fields"><input name="email_address" aria-label="Email Address" placeholder="Your email address" required="" type="email"/><button data-element="submit" type="submit"><span>Send Me the Chapter</span></button></div></form>
           <p class="form-note form-note-light">No spam. Unsubscribe anytime.</p>
         </div>
       </div>
@@ -452,7 +453,7 @@
     <div class="kit-wrap">
       <span class="kit-label" style="text-align:left;">Your email address</span>
       <!-- KIT FORM 3 -->
-      <form onsubmit="submitKit(event,this,'Get Notified')"><input type="email" placeholder="Your email address" required/><button type="submit">Get Notified</button></form>
+      <form action="https://app.kit.com/forms/9314576/subscriptions" class="seva-form" method="post" data-sv-form="9314576" data-uid="739be0019d" data-format="inline" data-version="5"><div data-element="fields"><input name="email_address" aria-label="Email Address" placeholder="Your email address" required="" type="email"/><button data-element="submit" type="submit"><span>Get Notified</span></button></div></form>
       <p class="form-note">No spam. Unsubscribe at any time.</p>
     </div>
   </div>
@@ -465,44 +466,6 @@
 </footer>
 
 <script>
-async function submitKit(e, form, btnLabel) {
-  e.preventDefault();
-  const email = form.querySelector('input[type="email"]').value.trim();
-  if (!email) return;
-  const btn = form.querySelector('button');
-  btn.textContent = 'Submitting…';
-  btn.disabled = true;
-  try {
-    const res = await fetch('https://app.convertkit.com/forms/9248449/subscriptions', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-      body: 'email_address=' + encodeURIComponent(email)
-    });
-    if (res.ok || res.status === 200 || res.type === 'opaque') {
-      form.innerHTML = '<p style="font-family:\'Cormorant Garamond\',serif;font-style:italic;font-size:1.1rem;color:inherit;padding:0.5rem 0;">✓ You\'re on the list. Check your inbox!</p>';
-    } else {
-      btn.textContent = btnLabel;
-      btn.disabled = false;
-      alert('Something went wrong. Please try again.');
-    }
-  } catch {
-    // no-cors fallback — submit via hidden iframe
-    const body = 'email_address=' + encodeURIComponent(email);
-    const iframe = document.createElement('iframe');
-    iframe.name = 'kit_frame_' + Date.now();
-    iframe.style.display = 'none';
-    document.body.appendChild(iframe);
-    const f = document.createElement('form');
-    f.method = 'POST';
-    f.action = 'https://app.convertkit.com/forms/9248449/subscriptions';
-    f.target = iframe.name;
-    const inp = document.createElement('input');
-    inp.type = 'hidden'; inp.name = 'email_address'; inp.value = email;
-    f.appendChild(inp); document.body.appendChild(f); f.submit();
-    setTimeout(() => { document.body.removeChild(f); document.body.removeChild(iframe); }, 3000);
-    form.innerHTML = '<p style="font-family:\'Cormorant Garamond\',serif;font-style:italic;font-size:1.1rem;color:inherit;padding:0.5rem 0;">✓ You\'re on the list. Check your inbox!</p>';
-  }
-}
 </script>
 </body>
 </html>
